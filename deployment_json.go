@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	deploymentData      []map[string]interface{}
+	DeploymentData      []map[string]interface{} // 将变量名首字母大写以导出
 	deploymentDataMutex sync.RWMutex
 )
 
@@ -54,6 +54,6 @@ func UpdateDeploymentData(namespaces ...string) {
 
 	log.Printf("Deployment数据更新完成")
 	deploymentDataMutex.Lock()
-	deploymentData = newDeploymentData
+	DeploymentData = newDeploymentData
 	deploymentDataMutex.Unlock()
 }

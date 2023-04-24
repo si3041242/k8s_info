@@ -7,6 +7,8 @@ import (
 	"os/exec"
 	"strings"
 	"sync"
+
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var (
@@ -56,4 +58,9 @@ func UpdateDeploymentData(namespaces ...string) {
 	DeploymentDataMutex.Lock()
 	DeploymentData = newDeploymentData
 	DeploymentDataMutex.Unlock()
+}
+
+// SetLogger 设置k8s_info包的日志输出
+func SetLogger(logger *lumberjack.Logger) {
+	log.SetOutput(logger)
 }

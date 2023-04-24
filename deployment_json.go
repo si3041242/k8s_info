@@ -16,6 +16,7 @@ var (
 
 // UpdateDeploymentData 获取k8s deployment资源生成json数据
 func UpdateDeploymentData(namespaces ...string) {
+	log.Printf("执行kubectl命令")
 	cmd := exec.Command("kubectl", "--kubeconfig=/root/.kube/config", "--output", "json", "get", "deployment", "-A")
 	stdout, err := cmd.Output()
 	if err != nil {
@@ -23,12 +24,14 @@ func UpdateDeploymentData(namespaces ...string) {
 		return
 	}
 
+	log.Printf("JSON解码")
 	var data map[string]interface{}
 	if err := json.Unmarshal(stdout, &data); err != nil {
 		log.Printf("Error unmarshalling JSON data: %s\n", err)
 		return
 	}
 
+	log.Printf("正在生成新的Deployment数据")
 	items := data["items"].([]interface{})
 	var newDeploymentData []map[string]interface{}
 
@@ -49,6 +52,7 @@ func UpdateDeploymentData(namespaces ...string) {
 		}
 	}
 
+	log.Printf("Deployment数据更新完成")
 	deploymentDataMutex.Lock()
 	deploymentData = newDeploymentData
 	deploymentDataMutex.Unlock()

@@ -11,7 +11,7 @@ import (
 
 var (
 	DeploymentData      []map[string]interface{} // 将变量名首字母大写以导出
-	deploymentDataMutex sync.RWMutex
+	DeploymentDataMutex sync.RWMutex
 )
 
 // UpdateDeploymentData 获取k8s deployment资源生成json数据
@@ -53,7 +53,7 @@ func UpdateDeploymentData(namespaces ...string) {
 	}
 
 	log.Printf("Deployment数据更新完成")
-	deploymentDataMutex.Lock()
+	DeploymentDataMutex.Lock()
 	DeploymentData = newDeploymentData
-	deploymentDataMutex.Unlock()
+	DeploymentDataMutex.Unlock()
 }

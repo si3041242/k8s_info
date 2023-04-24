@@ -16,7 +16,6 @@ var (
 
 // UpdateDeploymentData 获取k8s deployment资源生成json数据
 func UpdateDeploymentData(namespaces ...string) {
-	log.PrintF("获取k8s deloyment信息")
 	cmd := exec.Command("kubectl", "--kubeconfig=/root/.kube/config.prd", "--output", "json", "get", "deployment", "-A")
 	stdout, err := cmd.Output()
 	if err != nil {

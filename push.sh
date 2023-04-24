@@ -1,7 +1,8 @@
-info=$1
+#!/bin/bash
+info="$1"
 git add .
-git commit -m  $info
+git commit -m  "$info"
 git push origin main
 
-git tag $info
-git push origin $info
+git tag "$info"
+git push origin "$info"

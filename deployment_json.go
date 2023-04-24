@@ -10,7 +10,7 @@ import (
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )
-
+// version v0.1.13
 var (
 	DeploymentData      []map[string]interface{} // 将变量名首字母大写以导出
 	DeploymentDataMutex sync.RWMutex

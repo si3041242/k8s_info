@@ -10,16 +10,22 @@ import (
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )
+
 // version v0.1.13
 var (
 	DeploymentData      []map[string]interface{} // 将变量名首字母大写以导出
 	DeploymentDataMutex sync.RWMutex
+	kubeconfigPath      string
 )
+
+func SetKubeconfigPath(path string) {
+	kubeconfigPath = path
+}
 
 // UpdateDeploymentData 获取k8s deployment资源生成json数据
 func UpdateDeploymentData(namespaces ...string) {
 	log.Println("执行kubectl命令")
-	cmd := exec.Command("kubectl", "--kubeconfig=/root/.kube/config", "--output", "json", "get", "deployment", "-A")
+	cmd := exec.Command("kubectl", "--kubeconfig="+kubeconfigPath, "--output", "json", "get", "deployment", "-A")
 	stdout, err := cmd.Output()
 	if err != nil {
 		log.Printf("Error executing kubectl command: %s\n", err)
